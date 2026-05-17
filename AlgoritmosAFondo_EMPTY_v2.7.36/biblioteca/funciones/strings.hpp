@@ -7,7 +7,6 @@
 
 #include <iostream>
 using std::string;
-// using std::to_string;//=======================
 
 int length(string s)
 {
@@ -471,17 +470,17 @@ string ltrim(string s)
     return retorno;
 }
 
-string rtrim(string s)//revisar
+string rtrim(string s)
 {
-       string retorno;
+    string retorno;
 
-    int i = length(s);
-    while(i > length(s))
+    int i = length(s) - 1;
+    while(i > 0)
     {
         if(s[i] != ' ')
         {
-            retorno = substring(s, i);
-            i = length(s);
+            retorno = substring(s, 0, i + 1);
+            i = 0;
         }
         i--;
     }
@@ -491,81 +490,147 @@ string rtrim(string s)//revisar
 
 string trim(string s)
 {
-    return "";
+    string retorno;
+    retorno = ltrim(s);
+    retorno = rtrim(retorno);
+    return retorno;
 }
 
 string replicate(char c, int n)
 {
-    return "";
+    string retorno = "";
+    int i = 0;
+    while(i < n)
+    {
+        retorno += c;
+        i++;
+    }
+    return retorno;
 }
 
 string spaces(int n)
 {
-    return "";
+    return replicate(' ', n);
 }
 
 string lpad(string s, int n, char c)
 {
-    return "";
+    string aux = replicate(c, n - length(s));
+    return aux + s;
 }
 
 string rpad(string s, int n, char c)
 {
-    return "";
+    string aux = replicate(c, n - length(s));
+    return s + aux;
 }
 
 string cpad(string s, int n, char c)
 {
-    return "";
+    string retorno;
+    int cantAgregados = (abs(length(s) - n)) / 2;
+
+    retorno = lpad(s, cantAgregados + length(s), c);
+    retorno += replicate(c, cantAgregados);
+
+    return retorno;
 }
 
 bool isDigit(char c)
 {
-    return true;
+    return charToInt(c) >= 0 && charToInt(c) <= 9 ? true : false;
 }
 
 bool isLetter(char c)
 {
-    return true;
+    return charToInt(c) > 9 ? true : false;
 }
 
 bool isUpperCase(char c)
 {
-    return true;
+    return c >= 65 && c <= 90 ? true : false;
 }
 
 bool isLowerCase(char c)
 {
-    return true;
+    return c >= 97 && c <= 122 ? true : false;
 }
 
 char toUpperCase(char c)
 {
-    return '0';
+    char retorno;
+    if(isLowerCase(c))
+    {
+        retorno = c - 32;
+    }
+    else
+    {
+        retorno = c;
+    }
+    return retorno;
 }
 
 char toLowerCase(char c)
 {
-    return '0';
+    return isUpperCase(c) ? c + 32 : c;
 }
 
 string toUpperCase(string s)
 {
-    return "";
+    string retorno = "";
+    for(int i = 0; i < length(s); i++)
+    {
+        retorno += toUpperCase(s[i]);
+    }
+    return retorno;
 }
 
 string toLowerCase(string s)
 {
-    return "";
+    string retorno = "";
+    for(int i = 0; i < length(s); i++)
+    {
+        retorno += toLowerCase(s[i]);
+    }
+    return retorno;
 }
 
 int cmpString(string a, string b)
 {
+    int i = 0;
+    while(i < length(a) && i < length(b)) // si tienen el mismo tamanio, va caracter a caracter
+    {
+        if(a[i] < b[i])
+        {
+            return -1;
+        }
+        else if(a[i] > b[i])
+        {
+            return 1;
+        }
+        i++;
+    }
+
+    if(length(a)<length(b)){// una vez que hizo lo anterior, si alguno era mas grande que otro, inevitablemente va a ser alfabeticamente mayor
+        return 1;
+    }else if(length(a)>length(b)){
+        return -1;
+    }
+
+    //si hasta este punto siguen siendo iguales
     return 0;
 }
 
 int cmpDouble(double a, double b)
 {
+
+    if(a<b){
+        return -1;
+    }else if(a>b){
+        return 1;
+    }
+
+
     return 0;
 }
 
@@ -584,7 +649,7 @@ char* stringToCString(string s)  // Prehecho?
     return ret;
 }
 
-string cStringToString(char c[])
+string cStringToString(char c[])  // no esta en la api
 {
     return string(c);
 }
