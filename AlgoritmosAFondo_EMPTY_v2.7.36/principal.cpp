@@ -552,5 +552,24 @@ int main()
 //    cout << x << " es mayor que: " << y << endl;
 //  }
 
+
+
+// string s = "Esto es una prueba";
+// int p = indexOf(s,'e',0);
+// cout << p << endl; // muestra: 5
+// p = indexOf(s,'e',12);
+// cout << p << endl; // muestra: 15
+
+
+
+// string s = "Esta funcion es la funcion mas dificil";
+// int p = indexOf(s,"funcion",0);
+// cout << p << endl; // muestra: 5
+// p = indexOf(s,"funcion",13);
+// cout << p << endl; // muestra: 19
+
+
+
+
     return 0;
 }

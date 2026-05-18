@@ -37,7 +37,7 @@ int charCount(string s, char c)
 
 string substring(string s, int d, int h)
 {
-    string retorno;
+    string retorno ="";
 
     while(d < h)
     {
@@ -69,21 +69,10 @@ int indexOf(string s, char c)  // ok
 }
 
 int indexOf(string s, char c,
-            int offSet)  // ok // MEJORAR (llamando a la anterior)
+            int offSet)  // ok
 {
-    int i = offSet;
-    int retorno = -1;
-    while(s[i] != c && s[i] != '\0')
-    {
-        i++;
-    }
-    if(s[i] == c)
-    {
-        retorno = i;
-    }
-    return retorno;
-
-    return 0;
+    string aux = substring(s, offSet);
+    return indexOf(aux, c) + abs(length(aux) - length(s));
 }
 
 int indexOf(string s, string toSearch)  // ok
@@ -120,39 +109,10 @@ int indexOf(string s, string toSearch)  // ok
     return indice;
 }
 
-int indexOf(string s, string toSearch,
-            int offset)  // MEJORAR (llamando a la anterior)
+int indexOf(string s, string toSearch, int offset)
 {
-    int indice = -1;
-    int i = offset;
-    int j = 0;
-    bool continuar = true;
-
-    while(continuar)
-    {
-        if(toSearch[j + 1] == '\0' || s[i] == '\0')
-        {
-            continuar = false;
-        }
-
-        if(s[i] == toSearch[j])
-        {
-            j++;
-            if(indice == -1)
-            {
-                indice = i;
-            }
-        }
-        else
-        {
-            j = 0;
-            indice = -1;
-        }
-
-        i++;
-    }
-
-    return indice;
+    string aux = substring(s, offset);
+    return indexOf(aux, toSearch) + abs(length(aux) - length(s));
 }
 
 int lastIndexOf(string s, char c)
@@ -179,7 +139,7 @@ int lastIndexOf(string s, char c)
     return retorno;
 }
 
-int indexOfN(string s, char c, int n)
+int indexOfN(string s, char c, int n) //multiples returns
 {
     if(n == 0)
     {
@@ -202,9 +162,7 @@ int indexOfN(string s, char c, int n)
     {
         if(s[i] == c)
         {
-            // if(j==n){
             retorno = i;
-            // }
             j++;
         }
         i++;
@@ -292,7 +250,7 @@ int digitCount(int n)
 string intToString(int i)
 {
     int j = digitCount(i) - 1;
-    string retorno;
+    string retorno ="";
     while(j >= 0)
     {
         retorno += intToChar(getDigit(i, j));
@@ -327,7 +285,7 @@ int stringToInt(string s)  // ok
 
 string charToString(char c)
 {
-    string retorno;
+    string retorno ="";
     retorno += c;
     return retorno;
 }
@@ -347,7 +305,7 @@ string doubleToString(double d)  // Revisar precision
 {
     int auxParteEntera = int(d);
     int auxMantisa = (d - auxParteEntera) * round(pow(10, 5));  // harcodeado
-    string retorno;
+    string retorno = "";
 
     retorno += intToString(auxParteEntera);
     retorno += ".";
@@ -434,7 +392,7 @@ string replace(string s, char oldChar, char newChar)
 
 string insertAt(string s, int pos, char c)
 {
-    string retorno;
+    string retorno = "";
 
     retorno += substring(s, 0, pos);
     retorno += c;
@@ -445,7 +403,7 @@ string insertAt(string s, int pos, char c)
 
 string removeAt(string s, int pos)
 {
-    string retorno;
+    string retorno= "";
     retorno += substring(s, 0, pos);
     retorno += substring(s, pos + 1);
 
@@ -598,7 +556,8 @@ string toLowerCase(string s)
 int cmpString(string a, string b)
 {
     int i = 0;
-    while(i < length(a) && i < length(b)) // si tienen el mismo tamanio, va caracter a caracter
+    while(i < length(a) &&
+          i < length(b))  // si tienen el mismo tamanio, va caracter a caracter
     {
         if(a[i] < b[i])
         {
@@ -611,25 +570,30 @@ int cmpString(string a, string b)
         i++;
     }
 
-    if(length(a)<length(b)){// una vez que hizo lo anterior, si alguno era mas grande que otro, inevitablemente va a ser alfabeticamente mayor
+    if(length(a) < length(b))
+    {  // una vez que hizo lo anterior, si alguno era mas grande que otro,
+       // inevitablemente va a ser alfabeticamente mayor
         return 1;
-    }else if(length(a)>length(b)){
+    }
+    else if(length(a) > length(b))
+    {
         return -1;
     }
 
-    //si hasta este punto siguen siendo iguales
+    // si hasta este punto siguen siendo iguales
     return 0;
 }
 
 int cmpDouble(double a, double b)
 {
-
-    if(a<b){
+    if(a < b)
+    {
         return -1;
-    }else if(a>b){
+    }
+    else if(a > b)
+    {
         return 1;
     }
-
 
     return 0;
 }
