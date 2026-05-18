@@ -6,6 +6,8 @@
 
 struct Timer
 {
+    long long tsInicial;
+    long long tsFinal;
 };
 
 // funcion de inicializacion
@@ -18,18 +20,20 @@ Timer timer()
 // instante inicial (i)
 void timerStart(Timer& t)
 {
+    t.tsInicial = currTimeMillis();
 }
 
 // instante final (f)
 void timerStop(Timer& t)
 {
+    t.tsFinal = currTimeMillis();
 }
 
 // retorna el tiempo transcurrido entre f e i,
 // expresado en milisegundos
 long long timerElapsedTime(Timer t)
 {
-    return 0;
+    return t.tsFinal - t.tsInicial ;
 }
 
 #endif
