@@ -8,52 +8,84 @@ using std::to_string;
 
 struct Fraccion
 {
+    int numerador;
+    int denominador;
 };
 
-Fraccion fraccion(int n,int d)
+Fraccion fraccion(int n, int d)
 {
     Fraccion ret;
+    ret.numerador = n;
+    ret.denominador = d;
+
     return ret;
 }
 
 string fraccionToString(Fraccion f)
 {
-   return "";
+    return to_string(f.numerador) + "/" + to_string(f.denominador);
 }
 
-Fraccion fraccionSumar(Fraccion a,Fraccion b)
+Fraccion fraccionSumar(Fraccion a, Fraccion b)
 {
-   Fraccion ret;
-   return ret;
+    Fraccion ret;
+    int numA = a.numerador;
+    int denA = a.denominador;
+    int numB = b.numerador;
+    int denB = b.denominador;
+    int num = numA * denB + numB * denA;
+    int den = denA * denB;
+    ret.numerador = num;
+    ret.denominador = den;
+    return ret;
 }
 
 Fraccion fraccionSimplificar(Fraccion f)
 {
-   Fraccion ret;
-   return ret;
+    Fraccion ret;
+    int n = f.numerador;
+    int d = f.denominador;
+    int i = 2;
+    while(i <= n && i <= d)
+    {
+        if(n % i == 0 && d % i == 0)
+        {
+            n = n / i;
+            d = d / i;
+        }
+        else
+        {
+            i = i + 1;
+        }
+    }
+    ret.numerador = n;
+    ret.denominador = d;
+    return ret;
 }
 
 bool fraccionEsEntera(Fraccion f)
 {
-   return false;
+    return f.numerador % f.denominador == 0;
 }
 
 int fraccionGetNumerador(Fraccion f)
 {
-    return 0;
+    return f.numerador;
 }
 
-void fraccionSetNumerador(Fraccion& f,int n)
+void fraccionSetNumerador(Fraccion& f, int n)
 {
+    f.numerador = n;
 }
 
 int fraccionGetDenominador(Fraccion f)
 {
-    return 0;
+    return f.denominador;
 }
 
-void fraccionSetDenominador(Fraccion& f,int d)
+void fraccionSetDenominador(Fraccion& f, int d)
 {
+    f.numerador = d;
 }
 
 #endif
