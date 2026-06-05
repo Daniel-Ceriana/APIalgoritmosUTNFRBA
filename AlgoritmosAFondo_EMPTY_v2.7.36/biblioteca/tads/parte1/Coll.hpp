@@ -96,35 +96,39 @@ void collSort(Coll<T>& c, int cmpTT(T, T), T tFromString(string),
     // void collSetAt(Coll<T> & c, T t, int p, string tToString(T))
     //     T collGetAt(Coll<T> c, int p, T tFromString(string))
 
-
     int i = 1;
-    while(i < collSize(c)){
-        T primerElem = collGetAt(c,i-1,tFromString);
-        T segundoElem = collGetAt(c,i,tFromString);
-        if(cmpTT(primerElem,segundoElem) >0){
+    while(i < collSize(c))
+    {
+        T primerElem = collGetAt(c, i - 1, tFromString);
+        T segundoElem = collGetAt(c, i, tFromString);
+        if(cmpTT(primerElem, segundoElem) > 0)
+        {
             T aux = primerElem;
-            collSetAt(c,segundoElem,i-1,tToString);
-            collSetAt(c,aux,i,tToString);
-            if(i!=1){
+            collSetAt(c, segundoElem, i - 1, tToString);
+            collSetAt(c, aux, i, tToString);
+            if(i != 1)
+            {
                 i--;
             }
-        }else{
+        }
+        else
+        {
             i++;
         }
-        
     }
 }
 
 template <typename T>
 bool collHasNext(Coll<T> c)
 {
-    return true;
+    return c.contadorNext < collSize(c) ? true : false;
 }
 
 template <typename T>
 T collNext(Coll<T>& c, T tFromString(string))
 {
-    T t;
+    T t = collGetAt(c, c.contadorNext,tFromString);
+    c.contadorNext++;
     return t;
 }
 
@@ -132,12 +136,18 @@ template <typename T>
 T collNext(Coll<T>& c, bool& endOfColl, T tFromString(string))
 {
     T t;
+    if(collHasNext(c)){
+        t= collNext(c,tFromString);
+    }else{
+        endOfColl = true;
+    }
     return t;
 }
 
 template <typename T>
 void collReset(Coll<T>& c)
 {
+    c.contadorNext =0;
 }
 
 #endif
