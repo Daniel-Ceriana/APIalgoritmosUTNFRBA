@@ -30,58 +30,39 @@ struct Persona
     string nombre;
 };
 
-Persona persona(int dni, string nombre)
-{
-    Persona p = {dni, nombre};
-    // p.dni = dni;
-    // p.nombre = nombre;
-
+Persona persona(int dni, string nombre){
+    Persona p;
+    p.dni = dni;
+    p.nombre = nombre;
     return p;
 }
-
-Persona personaFromString(string persona)
-{
-    Persona p = {stringToInt(getTokenAt(persona, ',', 0)),
-                 getTokenAt(persona, ',', 1)};
-    return p;
+string personaToString(Persona p) {
+    return to_string(p.dni) + "," + p.nombre;
 }
 
-int cmpPersonaDNI(Persona p, int dni)
-{
-    return p.dni - dni;
-}
-int cmpPersonaDNI(Persona p, Persona p2)
-{
-    return p.dni - p2.dni;
+Persona personaFromString(string s){
+ int pos = indexOf(s, ',');
+
+    string dniStr = substring(s, 0, pos);
+    string nombreStr = substring(s, pos + 1);
+
+    return persona(stringToInt(dniStr), nombreStr);
 }
 
-string personaToString(Persona p)
-{
-    return intToString(p.dni) + ',' + p.nombre;
-}
+int cmpPersonaDNI(Persona p, int dni);
 void mostrarColeccion(Coll<Persona> c);
-int cmpPersonaNombre(Persona p, string nombre);
+int cmpPersonaNombre(Persona p,string nombre);
+int cmpPersonaNombre(Persona a, Persona b);
+int cmpPersonaDNI(Persona a, Persona b);
+
 int main()
 {
-    // Coll<Persona> c = coll<Persona>();
-    // collAdd<Persona>(c, persona(11, "Juan"), personaToString);
-    // collAdd<Persona>(c, persona(44, "Pedro"), personaToString);
-    // collAdd<Persona>(c, persona(33, "Carlos"), personaToString);
-    // collAdd<Persona>(c, persona(22, "Pablo"), personaToString);
-    // int dni = 33;
-    // int pos = collFind<Persona, int>(c, dni, cmpPersonaDNI,
-    // personaFromString); Persona p = collGetAt<Persona>(c, pos,
-    // personaFromString); cout << personaToString(p) << endl;
-
     Coll<Persona> c = coll<Persona>();
     collAdd<Persona>(c, persona(11, "Juan"), personaToString);
     collAdd<Persona>(c, persona(44, "Pedro"), personaToString);
     collAdd<Persona>(c, persona(33, "Carlos"), personaToString);
     collAdd<Persona>(c, persona(22, "Pablo"), personaToString);
     // ordenamos por nombre alfabeticamente
-//     void collSort(Coll<T>& c, int cmpTT(T, T), T tFromString(string),
-//               string tToString(T))
-// {
     collSort<Persona>(c, cmpPersonaNombre, personaFromString, personaToString);
     // iteramos y mostramos
     mostrarColeccion(c);
@@ -91,6 +72,11 @@ int main()
     mostrarColeccion(c);
 
     return 0;
+}
+
+int cmpPersonaDNI(Persona p, int dni)
+{
+    return p.dni - dni;
 }
 
 void mostrarColeccion(Coll<Persona> c)
@@ -103,11 +89,20 @@ void mostrarColeccion(Coll<Persona> c)
     }
 }
 
-int cmpPersonaNombre(Persona p, string nombre)
+int cmpPersonaNombre(Persona p,string nombre)
 {
-    return cmpString(p.nombre, nombre);
+ return cmpString(p.nombre,nombre);
 }
-// int cmpPersonaNombre(Persona p, Persona p2)
-// {
-//     return cmpString(p.nombre, p2.nombre);
-// }
+
+
+
+// Para collSort: comparan dos Personas entre si
+int cmpPersonaNombre(Persona a, Persona b)
+{
+    return cmpString(a.nombre, b.nombre);
+}
+
+int cmpPersonaDNI(Persona a, Persona b)
+{
+    return a.dni - b.dni;
+}
